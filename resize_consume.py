@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 # Load environmental variables
 load_dotenv()
 
-# Access the CLODUAMQP_URL environment variable 
+# Access the CLOUDAMQP_URL environment variable 
 # and parse it (fallback to localhost)
 url = os.environ.get('CLOUDAMQP_URL')
 params = pika.URLParameters(url)
@@ -16,7 +16,18 @@ connection = pika.BlockingConnection(params)
 channel = connection.channel() # start a channel
 channel.queue_declare(queue='resize') # Declare a queue
 def on_request(ch, method, properties, body):
-  print(json.loads(body))
+  
+  # Check if JSON
+  # https://stackoverflow.com/questions/5508509/
+  is_json = True
+  try:
+    json.loads(body)
+  except ValueError as e:
+    is_json = False
+  if is_json:
+    print(json.loads(body))
+  else:
+    print("Not a valid JSON")
 
   response = {
   'name': 'this is a test response',

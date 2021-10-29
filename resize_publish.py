@@ -7,32 +7,6 @@ from dotenv import load_dotenv
 # Load environmental variables
 load_dotenv()
 
-# # Access the CLODUAMQP_URL environment variable and parse it
-# #  (Fallback to localhost)
-# url = os.environ.get('CLOUDAMQP_URL')
-# params = pika.URLParameters(url)
-# context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-# params.ssl_options = pika.SSLOptions(context, server_hostname='CLOUDAMQP_HOST') 
-# connection = pika.BlockingConnection(params)
-# # Start a channel
-# channel = connection.channel() 
-# # Declare a queue
-# channel.queue_declare(queue='resize') 
-# # Create JSON message
-# # Based on https://stackoverflow.com/questions/34534178/
-
-# message = {
-#   'name': 'this is a test',
-#   'image_url': 'www.testing.com'
-# }
-
-# # Send message
-# channel.basic_publish(exchange='',
-#                         routing_key='resize',
-#                         body=json.dumps(message))
-# print(" [x] Sent 'A message from CS361'")
-# connection.close()
-
 class ResizeClient(object):
 
     def __init__(self):
