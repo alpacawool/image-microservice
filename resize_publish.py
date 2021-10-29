@@ -14,7 +14,7 @@ class ResizeClient(object):
         # Set up connection
         self.url = os.environ.get('CLOUDAMQP_URL')
         self.params = pika.URLParameters(self.url)
-        self.context =ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+        self.context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
         self.params.ssl_options = pika.SSLOptions(self.context, server_hostname='CLOUDAMQP_HOST') 
         self.connection = pika.BlockingConnection(self.params)
 
