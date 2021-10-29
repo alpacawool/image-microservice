@@ -36,7 +36,7 @@ class ImageClient(object):
         elapsed_seconds = (current_time - self.last_retrieved_token).total_seconds()
 
         # Retrieve a token if the current token is expired
-        print(f'Elapsed seconds: {elapsed_seconds}')
+        #print(f'Elapsed seconds: {elapsed_seconds}')
         if elapsed_seconds >= 1200 or self.token == '':
             #print("Token has expired.")
             self.last_retrieved_token = dt.now()
@@ -62,16 +62,17 @@ class ImageClient(object):
         return upload_report
     
     # Resize upload image
-    def __resize_image(self, uploaded_url, height, width):
-        return f'{uploaded_url}?h={height}&w={width}'
+    def __resize_image(self, uploaded_url, height, width, scale_option='ignore'):
+        return f'{uploaded_url}?h={height}&w={width}&scale.option={scale_option}'
 
-    def upload_and_resize(self, image_url, height, width):
+    # Upload and resize image
+    def upload_and_resize(self, image_url, height, width, scale_option='ignore'):
         upload_response = self.upload_hosted_image(image_url)
         is_upload_success = upload_response[0]['success']
         if is_upload_success:
             filename = upload_response[0]['filename']
             upload_image_url = f'{self.image_location_url}{filename}'
-            resized_url = self.__resize_image(upload_image_url, height, width)
+            resized_url = self.__resize_image(upload_image_url, height, width, scale_option)
             resize_success_message = {'image_url': resized_url, 'success': True}
             return resize_success_message
         else:
