@@ -1,6 +1,6 @@
 # Based on code from https://www.cloudamqp.com/docs/python.html
 # consume.py
-import pika, os, ssl
+import pika, os, ssl, json
 from dotenv import load_dotenv
 
 # Load environmental variables
@@ -15,12 +15,24 @@ params.ssl_options = pika.SSLOptions(context, server_hostname='CLOUDAMQP_HOST')
 connection = pika.BlockingConnection(params)
 channel = connection.channel() # start a channel
 channel.queue_declare(queue='resize') # Declare a queue
-def callback(ch, method, properties, body):
-  print(" [x] Received " + str(body))
+def on_request(ch, method, properties, body):
+  print(json.loads(body))
 
+  response = {
+  'name': 'this is a test response',
+  'image_url': 'www.testing.com/response'
+  }
+  
+  ch.basic_publish(exchange = '',
+                  routing_key = properties.reply_to,
+                  properties = pika.BasicProperties(correlation_id = \
+                                  properties.correlation_id),
+                  body=json.dumps(response))
+  ch.basic_ack(delivery_tag=method.delivery_tag)
+
+channel.basic_qos(prefetch_count=1)
 channel.basic_consume('resize',
-                      callback,
-                      auto_ack=True)
+                      on_message_callback = on_request)
 
 print(' [*] Waiting for messages:')
 channel.start_consuming()
