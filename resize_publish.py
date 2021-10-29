@@ -4,6 +4,7 @@
 import pika, os, ssl, json, uuid
 from dotenv import load_dotenv
 
+
 # Load environmental variables
 load_dotenv()
 
@@ -51,8 +52,10 @@ class ResizeClient(object):
 resize_client = ResizeClient()
 
 message = {
-  'name': 'this is a test',
-  'image_url': 'www.testing.com'
+  'image_url': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Savannah_Cat_portrait.jpg/800px-Savannah_Cat_portrait.jpg',
+  'height': 500,
+  'width': 500,
+  'scale_option': 'fill'
 }
 
 print(" [x] Sending message to consumer")

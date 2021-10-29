@@ -82,8 +82,8 @@ class ImageClient(object):
     
 
 # Demonstration
-image_client = ImageClient()
-print(image_client.upload_and_resize('https://upload.wikimedia.org/wikipedia/commons/3/3a/Russian_blue.jpg', 400, 400))
+#image_client = ImageClient()
+#print(image_client.upload_and_resize('https://upload.wikimedia.org/wikipedia/commons/3/3a/Russian_blue.jpg', 400, 400))
 
 
 
