@@ -13,7 +13,7 @@ load_dotenv()
 url = os.environ.get('CLOUDAMQP_URL')
 params = pika.URLParameters(url)
 context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-params.ssl_options = pika.SSLOptions(context, server_hostname='CLOUDAMQP_HOST') 
+params.ssl_options = pika.SSLOptions(context, server_hostname='CLOUDAMQP_HOST')
 connection = pika.BlockingConnection(params)
 channel = connection.channel() # start a channel
 channel.queue_declare(queue='resize') # Declare a queue
@@ -32,7 +32,9 @@ def on_request(ch, method, properties, body):
   except ValueError as e:
     is_json = False
   if is_json:
+    print("-------Request Received--------")
     request = json.loads(body)
+    print(request)
     # Check if required keys are there
     # REQUIRED: image_url, height, width
     if 'image_url' in request and 'height' in request \
