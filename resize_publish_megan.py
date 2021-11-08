@@ -51,6 +51,7 @@ class ResizeClient(object):
 
 resize_client = ResizeClient()
 
+# SAMPLE PUBLISHING MESSAGE
 message = {
   'image_url': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Savannah_Cat_portrait.jpg/800px-Savannah_Cat_portrait.jpg',
   'height': 500,

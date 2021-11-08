@@ -21,7 +21,7 @@ class ResizeClient(object):
 
         self.channel = self.connection.channel()
 
-        result = self.channel.queue_declare(queue='resize-megan', exclusive=False)
+        result = self.channel.queue_declare(queue='resize-jeff', exclusive=False)
         self.callback_queue = result.method.queue
 
         self.channel.basic_consume(
@@ -38,7 +38,7 @@ class ResizeClient(object):
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(
             exchange='',
-            routing_key='resize-megan',
+            routing_key='resize-jeff',
             properties=pika.BasicProperties(
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
@@ -51,6 +51,7 @@ class ResizeClient(object):
 
 resize_client = ResizeClient()
 
+# SAMPLE PUBLISHING MESSAGE
 message = {
   'image_url': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Savannah_Cat_portrait.jpg/800px-Savannah_Cat_portrait.jpg',
   'height': 500,

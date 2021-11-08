@@ -16,7 +16,7 @@ context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 params.ssl_options = pika.SSLOptions(context, server_hostname='CLOUDAMQP_HOST')
 connection = pika.BlockingConnection(params)
 channel = connection.channel() # start a channel
-channel.queue_declare(queue='resize-megan') # Declare a queue
+channel.queue_declare(queue='resize-jeff') # Declare a queue
 # Set up image resizing client
 resizer = ImageClient()
 
@@ -84,7 +84,7 @@ def on_request(ch, method, properties, body):
   ch.basic_ack(delivery_tag=method.delivery_tag)
 
 channel.basic_qos(prefetch_count=1)
-channel.basic_consume('resize-megan',
+channel.basic_consume('resize-jeff',
                       on_message_callback = on_request)
 
 print(' [*] Waiting for messages:')
